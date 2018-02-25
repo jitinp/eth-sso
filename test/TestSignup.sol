@@ -9,21 +9,25 @@ contract TestSignup {
 	Signup signup = Signup(DeployedAddresses.Signup());
 
 	// Testing the setUser function
-	function testUserCanSignup() public {
-		signup.setUser("7", "Jitin Pillai", "jitin2pillai@gmail.com");
+	function beforeEach() public {
+		signup.setUser("Jitin Pillai", "jitin2pillai@gmail.com");
 	}
 
-	// Testing the getUser function
-	function testUserCanGetResults() public {
+	// Testing whether the passed name is Correct
+	function testUserCanGetCorrectName() public {
 		address expected = this;
 
-		var userId;
-		var name;
-		var email;
+		var (id, name, email) = signup.getUser_(expected);
 
-		(userId, name, email) = signup.getUser();
-
-		Assert.equal(userId, "7", "Id as 7 should be recorded");
+		Assert.equal(name, "Jitin Pillai", "Name as Jitin Pillai should be recorded");	
 	}
 
-}
+	// Testing whether the passed name is Correct
+	function testUserCanGetCorrectEmail() public {
+		address expected = this;
+
+		var (id, name, email) = signup.getUser_(expected);
+
+		Assert.equal(email, "jitin2pillai@gmail.com", "Email as jitin2pillai@gmail.com should be recorded");	
+	}
+}		

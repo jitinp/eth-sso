@@ -4,9 +4,9 @@ contract Signup {
 	
 	// Struct of user data
 	struct User {
-		string id;
-		string name;
-		string email;
+		bytes32 id;
+		bytes32 name;
+		bytes32 email;
 	}
 
 	// mapping User Struct to users
@@ -16,12 +16,12 @@ contract Signup {
 	address[] public userAccounts;
 
 	// set User details
-	function setUser(string id, string name, string email) public {
+	function setUser(bytes32 name, bytes32 email) public {
 		
 		// Get current address of user
-		var user_ = users[msg.sender];
+		User storage user_ = users[msg.sender];
 
-		user_.id = id;
+		user_.id = keccak256(msg.sender);
 		user_.name = name;
 		user_.email = email;
 
@@ -30,10 +30,19 @@ contract Signup {
 	}
 
 	// get User details
-	function getUser() view public returns (string, string, string) {
+	function getUser() view public returns (bytes32, bytes32, bytes32) {
 
 		// Get current address of user
-		var user_ = users[msg.sender];
+		User memory user_ = users[msg.sender];
+
+		return (user_.id, user_.name, user_.email);
+	}
+	
+	// get User details by passing address
+	function getUser_(address userAddress) view public returns (bytes32, bytes32, bytes32) {
+
+		// Get current address of user
+		User memory user_ = users[userAddress];
 
 		return (user_.id, user_.name, user_.email);
 	}
