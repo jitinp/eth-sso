@@ -38,6 +38,24 @@ contract Signup {
 		return (user_.id, user_.name, user_.email);
 	}
 	
+	// share user details with app or service
+	// to further mask unique id, SHA3 user ID with URL
+	function allowSignin(string url, bool isName, bool isEmail) view public returns (bytes32, bytes32, bytes32) {
+
+		// Get current address of user
+		User memory user_ = users[msg.sender];
+
+		user_.id = keccak256(user_.id, url);
+	
+		if(isName != true)
+			user_.name = "";
+
+		if(isEmail != true)
+			user_.email = "";
+
+		return (user_.id, user_.name, user_.email);
+	}
+
 	// get User details by passing address
 	function getUser_(address userAddress) view public returns (bytes32, bytes32, bytes32) {
 

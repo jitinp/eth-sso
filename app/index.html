@@ -10,15 +10,32 @@
   <h2>Your dashboard</h2>
 
   <br>
-  <h1>Register</h1>
-  <br><label for="name">Name </label><input type="text" id="name" placeholder="e.g., Johny Lever"></input>
-  <br><label for="name">Email </label><input type="text" id="email" placeholder="e.g., johny@fuckmail.com"></input>
-  
-  <!-- Register user with smart contract here -->
-  <br><br><button id="send" onclick="App.registerUser()">Register</button>
+
+  <!-- package Registration Module together -->
+  <div id="register">
+    <h3>Register</h3>
+    <label for="name">Name </label><input type="text" id="name" placeholder="e.g., Johny Lever"></input>
+    <br><label for="name">Email </label><input type="text" id="email" placeholder="e.g., johny@fuckmail.com"></input>
+
+    <!-- Register user with smart contract here -->
+    <br><br><button id="send" onclick="App.registerUser()">Register</button>
+  </div>
+
+  <!-- welcome user -->
+  <div id="update" hidden="true">
+    <h3 id="welcome">Welcome home, </h3>
+
+    <h4>Update your info below</h4>
+    <label for="name">Name </label><input type="text" id="nameUpdate" placeholder="e.g., Johny Lever"></input>
+    <br><label for="name">Email </label><input type="text" id="emailUpdate" placeholder="e.g., johny@fuckmail.com"></input>
+
+    <!-- Register user with smart contract here -->
+    <br><br><button id="send" onclick="App.updateUser()">Update</button>
+    
+  </div>
+
   <br><br>
   <span id="status"></span>
   <br>
-  <span class="hint"><strong>Hint:</strong> open the browser developer console to view any errors and warnings.</span>
 </body>
 </html>
