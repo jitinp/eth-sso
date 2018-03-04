@@ -45,12 +45,4 @@ contract Signup {
 			user_.email = "";
 		return (user_.id, user_.name, user_.email);
 	}
-
-	// get User details by passing address
-	function getUser_(address userAddress) view public returns (bytes32, bytes32, bytes32) {
-		// Get current address of user
-		User memory user_ = users[userAddress];
-		return (user_.id, user_.name, user_.email);
-	}
-
 }
