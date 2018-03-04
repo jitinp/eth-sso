@@ -9,38 +9,11 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script>
         let ethsso = () => {
-            const path = "allowSignin.html";
-            const method = "GET";
-            // The rest of this code assumes you are not using a library.
-            // It can be made less wordy if you use one.
-            let form = document.createElement("form");
-            form.setAttribute("method", method);
-            form.setAttribute("action", path);
-
-            const hostName = window.location.hostname;
+            const url = "http://localhost:8080/allowSignin.html";
+            let hostName = window.location.hostname;
             let callbackURL = window.location.href;
-
-            console.log(hostName);
-            console.log(callbackURL);
-
-            let params = {"hostname": hostName, "callbackurl": callbackURL}
-
-            for(let key in params) {
-                if(params.hasOwnProperty(key)) {
-
-                    console.log(key + " :: " + params[key]);
-
-                    var hiddenField = document.createElement("input");
-                    hiddenField.setAttribute("type", "hidden");
-                    hiddenField.setAttribute("name", key);
-                    hiddenField.setAttribute("value", params[key]);
-
-                    form.appendChild(hiddenField);
-                }
-            }
-
-            document.body.appendChild(form);
-            form.submit();
+            let params = "hostname=" + hostName +"&callbackurl=" + callbackURL;
+            window.location.href = url + "?" + params;
         }
   </script>
 
