@@ -10,7 +10,10 @@ import { default as contract } from 'truffle-contract'
 
 // Signup is the main registration contract
  var Signup = contract(signup_artifacts);
- 
+
+// var accounts;
+// var account;
+
 window.App = {
   start: function() {
     let self = this;
@@ -40,7 +43,7 @@ window.App = {
         email = toString(userArray[2]);
 
         // if name & email is not 0x000, hide Register Module and display Name & Email
-        if(name != "" && email != "") {
+        if(name != "" || email != "") {
           // hide register module
           let registerDiv = document.getElementById("register");
           if(registerDiv != null)
@@ -48,37 +51,20 @@ window.App = {
 
           // unhide Welcome module
           let updateDiv = document.getElementById("update");
-          if(updateDiv != null) {
-            updateDiv.hidden = false;
+          updateDiv.hidden = false;
 
-            // welcome user by name
-            let userName = document.getElementById("welcome");
-            userName.innerHTML = userName.innerHTML + name;
+          // welcome user by name
+          let userName = document.getElementById("welcome");
+          userName.innerHTML = userName.innerHTML + name;
 
-            // Update name & email fields
-            let nameField = document.getElementById("nameUpdate");
-            nameField.value = name;
-            let emailField = document.getElementById("emailUpdate");
-            emailField.value = email;
-          }
+          // Update name & email fields
+          let nameField = document.getElementById("nameUpdate");
+          nameField.value = name;
+          let emailField = document.getElementById("emailUpdate");
+          emailField.value = email;
+          
+      }
 
-          // Activate share SSO module on Authenticate page
-          let sharesso = document.getElementById("sharesso");
-          if(sharesso != null) {
-            sharesso.hidden = false;
-
-            // welcome user by name
-            let userName = document.getElementById("welcome");
-            userName.innerHTML = userName.innerHTML + name;
-
-            // Display message to authenticate app
-            let authenticateMessage = document.getElementById("authMessage");
-            let getData = _GET();
-            let localhost = getData['hostname'];
-            let callbackurl = getData['callbackurl'];
-            authenticateMessage.innerHTML = "Authenticate " + localhost + " to register you?";
-          }
-        }
       }).catch(function(error) {
         console.log(error);
       });
@@ -106,10 +92,11 @@ window.App = {
       var account = accounts[0];
       console.log(account);
       Signup.deployed().then(function(instance) {
+        console.log("Hello");
         signup = instance;
         return instance.setUser(name, email, {from: account});
       }).then(function() {
-        // update action
+        console.log("Hey!!");
       }).catch(function(e) {
         console.log(e);
       });
@@ -136,51 +123,57 @@ window.App = {
       var account = accounts[0];
       console.log(account);
       Signup.deployed().then(function(instance) {
+        console.log("Hello");
         signup = instance;
         return instance.setUser(name, email, {from: account});
       }).then(function() {
-        // any action? 
+        console.log("Hey!!");
       }).catch(function(e) {
         console.log(e);
       });
     });
-  },
+  }
 
-  // Update User
-  // Accept Name & Email from user
-  signInUser: function() {
-    var self  = this;
+  // setStatus: function(message) {
+  //   var status = document.getElementById("status");
+  //   status.innerHTML = message;
+  // },
+  // refreshBalance: function() {
+  //   var self = this;
 
-    let isName = document.getElementById("isName").checked;
-    let isEmail = document.getElementById("isEmail").checked;
-    console.log("Update function: Name:: " + isName + " email: " + isEmail);
+  //   var meta;
+  //   MetaCoin.deployed().then(function(instance) {
+  //     meta = instance;
+  //     return meta.getBalance.call(account, {from: account});
+  //   }).then(function(value) {
+  //     var balance_element = document.getElementById("balance");
+  //     balance_element.innerHTML = value.valueOf();
+  //   }).catch(function(e) {
+  //     console.log(e);
+  //     self.setStatus("Error getting balance; see log.");
+  //   });
+  // },
 
-    let getData = _GET();
-    let localhost = getData['hostname'];
-    let callbackurl = getData['callbackurl'];
+//   sendCoin: function() {
+//     var self = this;
 
-    let authenticate;
+//     var amount = parseInt(document.getElementById("amount").value);
+//     var receiver = document.getElementById("receiver").value;
 
-    web3.eth.getAccounts(function(error, accounts) {
-      if(error) {
-        console.log(error);
-      }
-      
-      let account = accounts[0];
-      console.log(account);
-      Signup.deployed().then(function(instance) {
-        authenticate = instance;
-        return instance.allowSignin(localhost, isName, isEmail, {from: account});
-      }).then(function(userArray) {
-        console.log("Values to authenticate");
-        let userObject = {id: userArray[0], name: toString(userArray[1]), email: toString(userArray[2])};
-        console.log(userObject);
-        // pass it back in callback URL call
-      }).catch(function(e) {
-        console.log(e);
-      });
-    });
-  }  
+//     this.setStatus("Initiating transaction... (please wait)");
+
+//     var meta;
+//     MetaCoin.deployed().then(function(instance) {
+//       meta = instance;
+//       return meta.sendCoin(receiver, amount, {from: account});
+//     }).then(function() {
+//       self.setStatus("Transaction complete!");
+//       self.refreshBalance();
+//     }).catch(function(e) {
+//       console.log(e);
+//       self.setStatus("Error sending coin; see log.");
+//     });
+  // }
 };
 
 window.addEventListener('load', function() {
@@ -213,13 +206,4 @@ let toString = (hex) => {
   }
   console.log(str);
   return str;
-};
-
-var _GET = () => {
-  let _get = {};
-  let re = /[?&]([^=&]+)(=?)([^&]*)/g;
-  let m;
-  while (m = re.exec(location.search))
-      _get[decodeURIComponent(m[1])] = (m[2] == '=' ? decodeURIComponent(m[3]) : true);
-  return _get;
 };

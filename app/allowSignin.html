@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>ETHSSO -- Ethereum based SSO</title>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="./app.js"></script>
+</head>
+<body>
+    <!-- welcome user -->
+    <div id="sharesso" hidden="true">
+            <h3 id="welcome">Welcome home, </h3>
+        
+            <h4 id="authMessage">Authenticate app to access your info</h4>
+            <input type="checkbox" id="isName" name="name" value=""><label >Share name?</label><br>
+            <input type="checkbox" id="isEmail" name="email" value=""><label >Share email?</label><br>
+        
+            <!-- Register user with smart contract here -->
+            <br><button id="send" onclick="App.signInUser()">Authenticate</button>    
+    </div>
+</body>
+</html>
